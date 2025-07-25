@@ -1,0 +1,13 @@
+[2025-07-23 03:48:07] [ERROR] ElevenLabs key invalid or not authorized.
+[2025-07-23 03:49:09] [INFO] ElevenLabs key is valid.
+[2025-07-23 03:49:35] [INFO] Whisper key format looks OK.
+[2025-07-23 03:53:10] [INFO] ElevenLabs key is valid.
+[2025-07-23 04:04:42] [ERROR] ElevenLabs key invalid or not authorized.
+[2025-07-23 04:05:01] [INFO] ElevenLabs key is valid.
+[2025-07-23 04:16:38] [INFO] [BlackboxDriver] Starting...
+[2025-07-23 04:16:38] [ERROR] [Preflight] Input device 'default' not found.
+[2025-07-23 04:16:38] [ERROR] [Preflight] Output device 'default' not found.
+[2025-07-23 04:16:38] [ERROR] [Preflight] Configuration validation failed.
+[2025-07-23 04:16:38] [ERROR] [BlackboxDriver] Exiting due to invalid configuration.
+[2025-07-23 04:18:20] [INFO] ElevenLabs key is valid.
+[2025-07-23 04:18:24] [INFO] Deepgram key is valid.

@@ -1,0 +1,39 @@
+{
+  // === Engine/Backend Endpoint ===
+  "network": {
+    "server_url": "wss://your.digitalocean.server/ws", // DigitalOcean backend WebSocket or HTTP(S) endpoint
+    "api_key": "YOUR_BACKEND_API_KEY" // API key for backend authentication
+  },
+
+  // === API Keys ===
+  "api_keys": {
+    "elevenlabs": "YOUR_ELEVENLABS_API_KEY_HERE", // ElevenLabs TTS
+    "whisper": "YOUR_WHISPER_API_KEY_HERE" // Whisper STT (optional if using cloud)
+  },
+
+  // === Voice Settings ===
+  "voice": {
+    "stt": "whisper", // Speech-to-text engine (e.g., 'whisper')
+    "tts": "elevenlabs", // Text-to-speech engine (e.g., 'elevenlabs')
+    "input_device": "default", // Name or index of audio input device
+    "output_device": "default", // Name or index of audio output device
+    "volume": 1.0 // Output volume (0.0 - 1.0)
+  },
+
+  // === UI/Overlay ===
+  "ui": {
+    "overlay_enabled": true, // Show overlay UI
+    "toggle_key": "F1" // Key to toggle overlay (can be rebound)
+  },
+
+  // === Keybindings ===
+  "keybindings": {
+    "toggle_overlay": "F1", // Overlay toggle key
+    "push_to_talk": "V", // Key for push-to-talk
+    "next_audio_device": "F2", // Next audio device key
+    "prev_audio_device": "F3" // Previous audio device key
+  },
+
+  // === Profile ===
+  "profile": "default" // Optional: config profile name
+}

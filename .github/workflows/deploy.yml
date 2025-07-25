@@ -1,0 +1,151 @@
+name: Deploy PROJECT:BLACKBOX
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Run basic tests
+      run: |
+        python -c "import config.config_manager; print('Config manager OK')"
+        python -c "import network.network_manager; print('Network manager OK')"
+        python -c "import update_manager; print('Update manager OK')"
+
+  build-windows-exe:
+    needs: test
+    runs-on: windows-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+        
+    - name: Build Windows executable
+      run: |
+        python build_executable.py
+        
+    - name: Upload Windows executable
+      uses: actions/upload-artifact@v3
+      with:
+        name: PROJECT-BLACKBOX-Windows
+        path: dist/PROJECT-BLACKBOX.exe
+
+  deploy-to-digital-ocean:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Deploy to Digital Ocean
+      env:
+        DO_API_TOKEN: ${{ secrets.DO_API_TOKEN }}
+        DO_ENDPOINT: ${{ secrets.DO_ENDPOINT }}
+      run: |
+        # Create deployment package
+        zip -r blackbox-update.zip . -x "*.git*" "*.pyc" "__pycache__/*"
+        
+        # Send to Digital Ocean endpoint
+        curl -X POST \
+          -H "Authorization: Bearer ${DO_API_TOKEN}" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "version": "'$(git describe --tags --always)'",
+            "commit": "'${GITHUB_SHA}'",
+            "branch": "'${GITHUB_REF_NAME}'",
+            "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
+          }' \
+          "${DO_ENDPOINT}/api/deploy/notify"
+
+  create-release:
+    needs: [test, build-windows-exe]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Download Windows executable
+      uses: actions/download-artifact@v3
+      with:
+        name: PROJECT-BLACKBOX-Windows
+        path: ./dist/
+        
+    - name: Create Release Package
+      run: |
+        # Create complete release package
+        mkdir -p release-package
+        cp -r team release-package/
+        cp -r config release-package/
+        cp -r telemetry release-package/
+        cp -r voice release-package/
+        cp -r network release-package/
+        cp -r ui release-package/
+        cp *.py release-package/
+        cp *.md release-package/
+        cp requirements.txt release-package/
+        cp package.json release-package/
+        
+        # Add Windows executable
+        cp dist/PROJECT-BLACKBOX.exe release-package/
+        
+        # Create ZIP
+        cd release-package
+        zip -r ../PROJECT-BLACKBOX-${{ github.ref_name }}.zip .
+        cd ..
+        
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          PROJECT-BLACKBOX-${{ github.ref_name }}.zip
+          dist/PROJECT-BLACKBOX.exe
+        body: |
+          ## PROJECT:BLACKBOX ${{ github.ref_name }}
+          
+          ### What's New
+          - Automatic updates via GitHub and Digital Ocean
+          - Remote configuration management
+          - Improved deployment workflow
+          
+          ### Installation
+          1. Download `PROJECT-BLACKBOX-${{ github.ref_name }}.zip`
+          2. Extract to your desired location
+          3. Run `launcher.py` or use `PROJECT-BLACKBOX.exe`
+          
+          ### Remote Updates
+          This version supports automatic updates! Configure your GitHub token and Digital Ocean settings in the config panel.
+          
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

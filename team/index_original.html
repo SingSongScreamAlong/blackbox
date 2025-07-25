@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT:blackbox - F1 Team Engineer HUD</title>
+    <link rel="stylesheet" href="css/f1-style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- F1 HUD Container -->
+    <div class="f1-hud-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🏎️</span>
+                PROJECT:blackbox
+                <span style="color: #8b949e; font-size: 12px; margin-left: 10px;">TEAM ENGINEER COMMAND CENTER</span>
+            </div>
+            <div class="session-info">
+                <div class="session-status">
+                    <div class="status-dot connecting"></div>
+                    <span>CONNECTING</span>
+                </div>
+                <div class="timing-display">LAP 12/25</div>
+                <div class="timing-display">P3 | +2.847s</div>
+                <div class="timing-display">1:21.890</div>
+            </div>
+        </header>
+
+        <!-- Main Layout Grid -->
+        <div class="main-layout">
+            <!-- Left Sidebar -->
+            <div class="left-sidebar">
+                <!-- Vehicle Performance Panel -->
+                <div class="telemetry-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🏎️ VEHICLE PERFORMANCE</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn">📊</button>
+                            <button class="control-btn">⚙</button>
+                        </div>
+                    </div>
+                    <div class="telemetry-data">
+                        <div class="data-row">
+                            <span class="data-label">SPEED</span>
+                            <span class="data-value" id="speed">287</span>
+                            <span class="data-unit">KMH</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">GEAR</span>
+                            <span class="data-value gear" id="gear">7TH</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">RPM</span>
+                            <span class="data-value" id="rpm">11847</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">THROTTLE</span>
+                            <span class="data-value" id="throttle">94%</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">BRAKE</span>
+                            <span class="data-value" id="brake">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lap Times & Delta Panel -->
+                <div class="telemetry-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🏁 LAP TIMES & DELTA</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn">⏱</button>
+                            <button class="control-btn">⚙</button>
+                        </div>
+                    </div>
+                    <div class="lap-times-table">
+                        <div class="table-header">
+                            <span>LAP</span>
+                            <span>TIME</span>
+                            <span>DELTA</span>
+                            <span>GAP</span>
+                        </div>
+                        <div class="table-row">
+                            <span>10</span>
+                            <span>1:25.456</span>
+                            <span class="delta positive">+0.234</span>
+                            <span>-</span>
+                        </div>
+                        <div class="table-row">
+                            <span>11</span>
+                            <span>1:21.890</span>
+                            <span class="delta negative">-0.543</span>
+                            <span>-0.311</span>
+                        </div>
+                        <div class="table-row current">
+                            <span>12</span>
+                            <span>CURRENT</span>
+                            <span class="delta negative">-0.743</span>
+                            <span>+0.156</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fuel & Strategy Panel -->
+                <div class="telemetry-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">⛽ FUEL & STRATEGY</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn">🤖</button>
+                            <button class="control-btn">⚙</button>
+                        </div>
+                    </div>
+                    <div class="fuel-display">
+                        <div class="fuel-gauge">
+                            <div class="fuel-level" style="width: 31%"></div>
+                            <span class="fuel-text">18.7L</span>
+                        </div>
+                        <div class="fuel-stats">
+                            <div class="fuel-stat">
+                                <span class="stat-label">USAGE/LAP</span>
+                                <span class="stat-value">2.1L</span>
+                            </div>
+                            <div class="fuel-stat">
+                                <span class="stat-label">LAPS REM</span>
+                                <span class="stat-value">8.9</span>
+                            </div>
+                        </div>
+                        <div class="pit-window">
+                            <span class="pit-status active">PIT WINDOW</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Track Section (Center) -->
+            <div class="track-section">
+                <!-- Track Map Panel -->
+                <div class="telemetry-panel track-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🗺 SILVERSTONE GRAND PRIX CIRCUIT</h3>
+                        <div class="track-stats">
+                            <span class="track-stat">5.891km</span>
+                            <span class="track-stat">18 CORNERS</span>
+                            <span class="track-stat">DRY CONDITIONS</span>
+                            <span class="track-stat">22°C TRACK TEMP</span>
+                        </div>
+                        <div class="panel-controls">
+                            <button class="control-btn">🏁</button>
+                            <button class="control-btn">⚙</button>
+                        </div>
+                    </div>
+                    <div class="track-map-container">
+                        <canvas id="trackCanvas"></canvas>
+                        <div class="track-info-overlay">
+                            <div class="sector-times-display">
+                                <div class="sector-time">
+                                    <span class="sector-label">SECTOR 1</span>
+                                    <span class="sector-value">31.234</span>
+                                </div>
+                                <div class="sector-time">
+                                    <span class="sector-label">SECTOR 2</span>
+                                    <span class="sector-value">28.891</span>
+                                </div>
+                                <div class="sector-time">
+                                    <span class="sector-label">SECTOR 3</span>
+                                    <span class="sector-value">21.765</span>
+                                </div>
+                            </div>
+                            <div class="position-info">
+                                <div class="position-display">P3</div>
+                                <div class="gap-display">+2.847s</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="right-sidebar">
+                <!-- Tire Data Panel -->
+                <div class="telemetry-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🛞 TIRE DATA</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn">🔧</button>
+                            <button class="control-btn">⚙</button>
+                        </div>
+                    </div>
+                    <div class="tire-display">
+                        <div class="tire-grid">
+                            <div class="tire-corner fl">
+                                <div class="tire-label">FL</div>
+                                <div class="tire-temp">89°C</div>
+                                <div class="tire-pressure">32.1 PSI</div>
+                                <div class="tire-wear">23%</div>
+                            </div>
+                            <div class="tire-corner fr">
+                                <div class="tire-label">FR</div>
+                                <div class="tire-temp">91°C</div>
+                                <div class="tire-pressure">32.3 PSI</div>
+                                <div class="tire-wear">18%</div>
+                            </div>
+                            <div class="tire-corner rl">
+                                <div class="tire-label">RL</div>
+                                <div class="tire-temp">95°C</div>
+                                <div class="tire-pressure">31.8 PSI</div>
+                                <div class="tire-wear">31%</div>
+                            </div>
+                            <div class="tire-corner rr">
+                                <div class="tire-label">RR</div>
+                                <div class="tire-temp">93°C</div>
+                                <div class="tire-pressure">32.0 PSI</div>
+                                <div class="tire-wear">29%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Engine & Mechanical Panel -->
+                <div class="telemetry-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🔧 ENGINE & MECHANICAL</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn">⛽</button>
+                            <button class="control-btn">⚙</button>
+                        </div>
+                    </div>
+                    <div class="engine-data">
+                        <div class="data-row">
+                            <span class="data-label">ENGINE TEMP</span>
+                            <span class="data-value" id="engine-temp">89°C</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">OIL PRESS</span>
+                            <span class="data-value" id="oil-pressure">94 PSI</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">BOOST</span>
+                            <span class="data-value" id="boost">1.4 BAR</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">ENG MODE</span>
+                            <span class="data-value" id="engine-mode">MAP2</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Analysis Panel -->
+                <div class="telemetry-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🤖 AI ANALYSIS</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn">🧠</button>
+                            <button class="control-btn">⚙</button>
+                        </div>
+                    </div>
+                    <div class="ai-suggestions">
+                        <div class="suggestion priority-high">
+                            <div class="suggestion-priority">HIGH PRIORITY</div>
+                            <div class="suggestion-text">PIT WINDOW OPENS LAP 15-17</div>
+                            <div class="suggestion-gain">OPTIMAL: LAP 16</div>
+                        </div>
+                        <div class="suggestion priority-medium">
+                            <div class="suggestion-priority">FUEL SAVE</div>
+                            <div class="suggestion-text">REDUCE FUEL USAGE BY 0.2L/LAP</div>
+                            <div class="suggestion-gain">EXTENDS STINT +2 LAPS</div>
+                        </div>
+                        <div class="suggestion priority-low">
+                            <div class="suggestion-priority">OVERTAKE</div>
+                            <div class="suggestion-text">OPPORTUNITY T13 STOWE CORNER</div>
+                            <div class="suggestion-gain">POTENTIAL GAIN: +0.3s</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Scripts -->
+    <script src="js/websocket-client.js"></script>
+    <script src="js/telemetry-processor.js"></script>
+    <script src="js/track-map.js"></script>
+    <script src="js/ui-controller.js"></script>
+</body>
+</html>

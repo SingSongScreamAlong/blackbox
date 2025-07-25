@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT:blackbox - F1 Team Engineer HUD</title>
+    <link rel="stylesheet" href="css/f1-style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- F1 HUD Container -->
+    <div class="f1-hud-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🏎️</span>
+                PROJECT:blackbox
+                <span style="color: #8b949e; font-size: 12px; margin-left: 10px;">TEAM ENGINEER COMMAND CENTER</span>
+            </div>
+            <div class="session-info">
+                <div class="session-status">
+                    <div class="status-dot connecting"></div>
+                    <span>CONNECTING</span>
+                </div>
+                <div class="timing-display">LAP 12/25</div>
+                <div class="timing-display">P3 | +2.847s</div>
+                <div class="timing-display">1:21.890</div>
+            </div>
+        </header>
+
+        <!-- Compact Team Radio Status -->
+        <div class="team-radio-compact">
+            <div class="radio-status-content">
+                <div class="radio-icon">🎙️</div>
+                <div class="radio-info">
+                    <span class="radio-title">TEAM RADIO</span>
+                    <span class="radio-count" id="radio-message-count">3 messages</span>
+                </div>
+                <div class="radio-last-message" id="radio-last-message">
+                    <span class="radio-speaker">AI STRATEGIST:</span>
+                    <span class="radio-preview">"Pit window opens in 3 laps..."</span>
+                </div>
+                <button class="radio-ptt-btn" id="compact-ptt-button">
+                    <span class="ptt-icon">🎙️</span>
+                    <span class="ptt-text">TALK</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Layout Grid -->
+        <div class="main-layout">
+            <!-- Left Sidebar -->
+            <div class="left-sidebar">
+                <!-- Vehicle Performance Panel -->
+                <div class="telemetry-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🏎️ VEHICLE PERFORMANCE</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn">📊</button>
+                            <button class="control-btn">⚙</button>
+                        </div>
+                    </div>
+                    <div class="telemetry-data">
+                        <div class="telemetry-grid">
+                            <div class="telemetry-item speed">
+                                <div class="telemetry-content">
+                                    <span class="label">Speed</span>
+                                    <span class="separator">:</span>
+                                    <span class="value">287</span>
+                                    <span class="unit">KMH</span>
+                                </div>
+                            </div>
+                            <div class="telemetry-item gear">
+                                <div class="telemetry-content">
+                                    <span class="label">Gear</span>
+                                    <span class="separator">:</span>
+                                    <span class="value">7th</span>
+                                </div>
+                            </div>
+                            <div class="telemetry-item rpm">
+                                <div class="telemetry-content">
+                                    <span class="label">RPM</span>
+                                    <span class="separator">:</span>
+                                    <span class="value">11,847</span>
+                                </div>
+                            </div>
+                            <div class="telemetry-item throttle">
+                                <div class="telemetry-content">
+                                    <span class="label">Throttle</span>
+                                    <span class="separator">:</span>
+                                    <span class="value">94</span>
+                                    <span class="unit">%</span>
+                                </div>
+                            </div>
+                            <div class="telemetry-item brake">
+                                <div class="telemetry-content">
+                                    <span class="label">Brake</span>
+                                    <span class="separator">:</span>
+                                    <span class="value">0</span>
+                                    <span class="unit">%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lap Times & Delta Panel -->
+                <div class="telemetry-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🏁 LAP TIMES & DELTA</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn">⏱</button>
+                            <button class="control-btn">⚙</button>
+                        </div>
+                    </div>
+                    <div class="lap-times-table">
+                        <div class="table-header">
+                            <div class="lap-times-content">
+                                <div class="lap-time-item">
+                                    <div class="lap-content">
+                                        <span class="lap-label">Lap 10</span>
+                                        <span class="separator">:</span>
+                                        <span class="lap-time">1:25.456</span>
+                                        <span class="lap-delta positive">+0.234</span>
+                                    </div>
+                                </div>
+                                <div class="lap-time-item">
+                                    <div class="lap-content">
+                                        <span class="lap-label">Lap 11</span>
+                                        <span class="separator">:</span>
+                                        <span class="lap-time">1:21.890</span>
+                                        <span class="lap-delta negative">-0.543</span>
+                                    </div>
+                                </div>
+                                <div class="lap-time-item">
+                                    <div class="lap-content">
+                                        <span class="lap-label">Current</span>
+                                        <span class="separator">:</span>
+                                        <span class="lap-time">1:22.633</span>
+                                        <span class="lap-delta neutral">+0.156</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fuel & Strategy Panel -->
+                <div class="telemetry-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">⛽ FUEL & STRATEGY</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn">🤖</button>
+                            <button class="control-btn">⚙</button>
+                        </div>
+                    </div>
+                    <div class="fuel-display">
+                        <div class="fuel-gauge">
+                            <div class="fuel-level" style="width: 31%"></div>
+                            <div class="fuel-info">
+                                <div class="fuel-item good">
+                                    <div class="fuel-content">
+                                        <span class="fuel-label">Fuel Remaining</span>
+                                        <span class="separator">:</span>
+                                        <span class="fuel-value">18.7</span>
+                                        <span class="fuel-unit">L</span>
+                                    </div>
+                                </div>
+                                <div class="fuel-item">
+                                    <div class="fuel-content">
+                                        <span class="fuel-label">Usage/Lap</span>
+                                        <span class="separator">:</span>
+                                        <span class="fuel-value">2.1</span>
+                                        <span class="fuel-unit">L</span>
+                                    </div>
+                                </div>
+                                <div class="fuel-item warning">
+                                    <div class="fuel-content">
+                                        <span class="fuel-label">Laps Remaining</span>
+                                        <span class="separator">:</span>
+                                        <span class="fuel-value">8.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pit-window">
+                            <span class="pit-status active">PIT WINDOW</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Track Section (Center) -->
+            <div class="track-section">
+                <!-- Track Map Panel -->
+                <div class="telemetry-panel track-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🗺 SILVERSTONE GRAND PRIX CIRCUIT</h3>
+                        <div class="track-stats">
+                            <span class="track-stat">5.891km</span>
+                            <span class="track-stat">18 CORNERS</span>
+                            <span class="track-stat">DRY CONDITIONS</span>
+                            <span class="track-stat">22°C TRACK TEMP</span>
+                        </div>
+                        <div class="panel-controls">
+                            <button class="control-btn">🏁</button>
+                            <button class="control-btn">⚙</button>
+                        </div>
+                    </div>
+                    <div class="track-map-container">
+                        <canvas id="trackCanvas"></canvas>
+                        <div class="track-info-overlay">
+                            <div class="sector-times-display">
+                                <div class="sector-time">
+                                    <span class="sector-label">SECTOR 1</span>
+                                    <span class="sector-value">31.234</span>
+                                </div>
+                                <div class="sector-time">
+                                    <span class="sector-label">SECTOR 2</span>
+                                    <span class="sector-value">28.891</span>
+                                </div>
+                                <div class="sector-time">
+                                    <span class="sector-label">SECTOR 3</span>
+                                    <span class="sector-value">21.765</span>
+                                </div>
+                            </div>
+                            <div class="position-info">
+                                <div class="position-display">P3</div>
+                                <div class="gap-display">+2.847s</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Race Strategy & Competitors Panel -->
+                <div class="panel strategy-panel">
+                    <div class="panel-header">
+                        <h3>🏁 ENDURANCE RACE STRATEGY</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn">📊</button>
+                            <button class="control-btn">⚙</button>
+                        </div>
+                    </div>
+                    <div class="panel-content">
+                    <div class="competitor-standings">
+                        <div class="standings-header">
+                            <span class="pos-col">P</span>
+                            <span class="driver-col">DRIVER/CAR</span>
+                            <span class="gap-col">GAP</span>
+                            <span class="data-col">DATA</span>
+                        </div>
+                        <div class="standings-list">
+                            <div class="driver-row clickable-driver" data-driver="CHEN" data-team="POR">
+                                <div class="position p1">1</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">CHEN</div>
+                                    <div class="car-info">#7 Porsche 963</div>
+                                    <div class="team-name">Porsche Works</div>
+                                </div>
+                                <div class="gap leader">LEADER</div>
+                                <div class="available-data">
+                                    <span class="data-item tire" title="Tire: Hard, 45 laps">H45</span>
+                                    <span class="data-item fuel" title="Fuel: 23.4L remaining">⛽</span>
+                                    <span class="data-item temp" title="Engine temp: 89°C">🌡️</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="MARTINEZ" data-team="TOY">
+                                <div class="position p2">2</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">MARTINEZ</div>
+                                    <div class="car-info">#12 Toyota GR010</div>
+                                    <div class="team-name">Toyota Gazoo</div>
+                                </div>
+                                <div class="gap">+0:23.456</div>
+                                <div class="available-data">
+                                    <span class="data-item tire" title="Tire: Medium, 32 laps">M32</span>
+                                    <span class="data-item fuel" title="Fuel: 18.7L remaining">⛽</span>
+                                    <span class="data-item temp" title="Engine temp: 92°C">🌡️</span>
+                                </div>
+                                <div class="stint-info">
+                                    <span class="stint-number">2</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver you-driver" data-driver="YOU" data-team="YOUR">
+                                <div class="position p3">3</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">YOU</div>
+                                    <div class="car-info">#28 Your Car</div>
+                                    <div class="team-name">Your Team</div>
+                                </div>
+                                <div class="gap">+0:45.123</div>
+                                <div class="available-data">
+                                    <span class="data-item tire" title="Tire: Medium, 28 laps">M28</span>
+                                    <span class="data-item fuel" title="Fuel: 15.2L remaining">⛽</span>
+                                    <span class="data-item temp" title="Engine temp: 87°C">🌡️</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="KOWALSKI" data-team="BMW">
+                                <div class="position p4">4</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">KOWALSKI</div>
+                                    <div class="car-info">#18 BMW M4 GT3</div>
+                                    <div class="team-name">BMW M Team</div>
+                                </div>
+                                <div class="gap">+1:12.789</div>
+                                <div class="available-data">
+                                    <span class="data-item tire" title="Tire: Soft, 18 laps">S18</span>
+                                    <span class="data-item fuel" title="Fuel: 22.1L remaining">⛽</span>
+                                    <span class="data-item temp" title="Engine temp: 91°C">🌡️</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="NAKAMURA" data-team="HON">
+                                <div class="position p5">5</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">NAKAMURA</div>
+                                    <div class="car-info">#41 Honda NSX GT3</div>
+                                    <div class="team-name">Honda Racing</div>
+                                </div>
+                                <div class="gap">+2:14.567</div>
+                                <div class="available-data">
+                                    <span class="data-item tire" title="Tire: Medium, 41 laps">M41</span>
+                                    <span class="data-item fuel" title="Fuel: 19.8L remaining">⛽</span>
+                                    <span class="data-item speed" title="Current speed: 245 KMH">💨</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="ROSSI" data-team="FER">
+                                <div class="position p6">6</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">ROSSI</div>
+                                    <div class="car-info">#52 Ferrari 488 GT3</div>
+                                    <div class="team-name">Ferrari GT</div>
+                                </div>
+                                <div class="gap">+3:28.234</div>
+                                <div class="available-data">
+                                    <span class="data-item tire" title="Tire: Hard, 52 laps">H52</span>
+                                    <span class="data-item fuel" title="Fuel: 16.3L remaining">⛽</span>
+                                    <span class="data-item temp" title="Engine temp: 88°C">🌡️</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="THOMPSON" data-team="AST">
+                                <div class="position p7">7</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">THOMPSON</div>
+                                    <div class="car-info">#36 Aston Martin Vantage</div>
+                                    <div class="team-name">Aston Martin</div>
+                                </div>
+                                <div class="gap">+4:05.891</div>
+                                <div class="available-data">
+                                    <span class="data-item tire" title="Tire: Medium, 36 laps">M36</span>
+                                    <span class="data-item fuel" title="Fuel: 20.7L remaining">⛽</span>
+                                    <span class="data-item temp" title="Engine temp: 93°C">🌡️</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="WEBER" data-team="AUD">
+                                <div class="position p8">8</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">WEBER</div>
+                                    <div class="car-info">#48 Audi R8 LMS GT3</div>
+                                    <div class="team-name">Audi Sport</div>
+                                </div>
+                                <div class="gap">+5:12.456</div>
+                                <div class="available-data">
+                                    <span class="data-item tire" title="Tire: Hard, 48 laps">H48</span>
+                                    <span class="data-item fuel" title="Fuel: 14.9L remaining">⛽</span>
+                                    <span class="data-item temp" title="Engine temp: 95°C">🌡️</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="GARCIA" data-team="LAM">
+                                <div class="position p9">9</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">GARCIA</div>
+                                    <div class="car-info">#29 Lamborghini Huracan GT3</div>
+                                    <div class="team-name">Lamborghini</div>
+                                </div>
+                                <div class="gap">+5:48.123</div>
+                                <div class="available-data">
+                                    <span class="data-item tire" title="Tire: Medium, 29 laps">M29</span>
+                                    <span class="data-item fuel" title="Fuel: 17.8L remaining">⛽</span>
+                                    <span class="data-item speed" title="Current speed: 238 KMH">💨</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="JOHNSON" data-team="FOR">
+                                <div class="position p10">10</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">JOHNSON</div>
+                                    <div class="car-info">#15 Ford GT</div>
+                                    <div class="team-name">Ford GT Team</div>
+                                </div>
+                                <div class="gap">+6:55.789</div>
+                                <div class="available-data">
+                                    <span class="data-item tire" title="Tire: Soft, 15 laps">S15</span>
+                                    <span class="data-item fuel" title="Fuel: 21.4L remaining">⛽</span>
+                                    <span class="data-item temp" title="Engine temp: 86°C">🌡️</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="GAS" data-team="ALP">
+                                <div class="position p11">11</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">GAS</div>
+                                    <div class="team-name">Alpine</div>
+                                </div>
+                                <div class="gap">+24.891</div>
+                                <div class="tire-info">
+                                    <span class="tire-compound hard">H</span>
+                                    <span class="tire-age">20</span>
+                                </div>
+                                <div class="stint-info">
+                                    <span class="stint-number">1</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="OCO" data-team="ALP">
+                                <div class="position p12">12</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">OCO</div>
+                                    <div class="team-name">Alpine</div>
+                                </div>
+                                <div class="gap">+28.234</div>
+                                <div class="tire-info">
+                                    <span class="tire-compound medium">M</span>
+                                    <span class="tire-age">13</span>
+                                </div>
+                                <div class="stint-info">
+                                    <span class="stint-number">1</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="TSU" data-team="RB">
+                                <div class="position p13">13</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">TSU</div>
+                                    <div class="team-name">RB</div>
+                                </div>
+                                <div class="gap">+32.567</div>
+                                <div class="tire-info">
+                                    <span class="tire-compound hard">H</span>
+                                    <span class="tire-age">16</span>
+                                </div>
+                                <div class="stint-info">
+                                    <span class="stint-number">1</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="RIC" data-team="RB">
+                                <div class="position p14">14</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">RIC</div>
+                                    <div class="team-name">RB</div>
+                                </div>
+                                <div class="gap">+35.891</div>
+                                <div class="tire-info">
+                                    <span class="tire-compound medium">M</span>
+                                    <span class="tire-age">10</span>
+                                </div>
+                                <div class="stint-info">
+                                    <span class="stint-number">2</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="HUL" data-team="HAS">
+                                <div class="position p15">15</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">HUL</div>
+                                    <div class="team-name">Haas</div>
+                                </div>
+                                <div class="gap">+39.234</div>
+                                <div class="tire-info">
+                                    <span class="tire-compound soft">S</span>
+                                    <span class="tire-age">5</span>
+                                </div>
+                                <div class="stint-info">
+                                    <span class="stint-number">2</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="MAG" data-team="HAS">
+                                <div class="position p16">16</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">MAG</div>
+                                    <div class="team-name">Haas</div>
+                                </div>
+                                <div class="gap">+42.567</div>
+                                <div class="tire-info">
+                                    <span class="tire-compound hard">H</span>
+                                    <span class="tire-age">22</span>
+                                </div>
+                                <div class="stint-info">
+                                    <span class="stint-number">1</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="BOT" data-team="SAU">
+                                <div class="position p17">17</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">BOT</div>
+                                    <div class="team-name">Sauber</div>
+                                </div>
+                                <div class="gap">+46.891</div>
+                                <div class="tire-info">
+                                    <span class="tire-compound medium">M</span>
+                                    <span class="tire-age">14</span>
+                                </div>
+                                <div class="stint-info">
+                                    <span class="stint-number">1</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="ZHO" data-team="SAU">
+                                <div class="position p18">18</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">ZHO</div>
+                                    <div class="team-name">Sauber</div>
+                                </div>
+                                <div class="gap">+50.234</div>
+                                <div class="tire-info">
+                                    <span class="tire-compound hard">H</span>
+                                    <span class="tire-age">19</span>
+                                </div>
+                                <div class="stint-info">
+                                    <span class="stint-number">1</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="ALB" data-team="WIL">
+                                <div class="position p19">19</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">ALB</div>
+                                    <div class="team-name">Williams</div>
+                                </div>
+                                <div class="gap">+54.567</div>
+                                <div class="tire-info">
+                                    <span class="tire-compound soft">S</span>
+                                    <span class="tire-age">2</span>
+                                </div>
+                                <div class="stint-info">
+                                    <span class="stint-number">3</span>
+                                </div>
+                            </div>
+                            
+                            <div class="driver-row clickable-driver" data-driver="SAR" data-team="WIL">
+                                <div class="position p20">20</div>
+                                <div class="driver-info">
+                                    <div class="driver-name">SAR</div>
+                                    <div class="team-name">Williams</div>
+                                </div>
+                                <div class="gap">+58.891</div>
+                                <div class="tire-info">
+                                    <span class="tire-compound medium">M</span>
+                                    <span class="tire-age">12</span>
+                                </div>
+                                <div class="stint-info">
+                                    <span class="stint-number">1</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="strategy-alerts">
+                            <div class="alert undercut-alert">
+                                <span class="alert-icon">⚠</span>
+                                <span class="alert-text">UNDERCUT WINDOW: Lap 15-18</span>
+                            </div>
+                            <div class="alert fuel-alert">
+                                <span class="alert-icon">⛽</span>
+                                <span class="alert-text">RUS: Critical fuel - 6 laps remaining</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- Right Sidebar -->
+            <div class="right-sidebar">
+                <!-- Tire Data Panel -->
+                <div class="telemetry-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🛞 TIRE DATA</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn">🔧</button>
+                            <button class="control-btn">⚙</button>
+                        </div>
+                    </div>
+                    <div class="tire-display">
+                        <div class="tire-grid">
+                            <div class="tire-corner">
+                                <div class="tire-header">FL</div>
+                                <div class="tire-data">
+                                    <div class="tire-item temp">
+                                        <span class="label">Temp:</span>
+                                        <span class="value">89</span>
+                                        <span class="unit">°C</span>
+                                    </div>
+                                    <div class="tire-item pressure">
+                                        <span class="label">Press:</span>
+                                        <span class="value">32.1</span>
+                                        <span class="unit">PSI</span>
+                                    </div>
+                                    <div class="tire-item wear">
+                                        <span class="label">Wear:</span>
+                                        <span class="value">23</span>
+                                        <span class="unit">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tire-corner">
+                                <div class="tire-header">FR</div>
+                                <div class="tire-data">
+                                    <div class="tire-item temp">
+                                        <span class="label">Temp:</span>
+                                        <span class="value">91</span>
+                                        <span class="unit">°C</span>
+                                    </div>
+                                    <div class="tire-item pressure">
+                                        <span class="label">Press:</span>
+                                        <span class="value">32.3</span>
+                                        <span class="unit">PSI</span>
+                                    </div>
+                                    <div class="tire-item wear">
+                                        <span class="label">Wear:</span>
+                                        <span class="value">18</span>
+                                        <span class="unit">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tire-corner">
+                                <div class="tire-header">RL</div>
+                                <div class="tire-data">
+                                    <div class="tire-item temp">
+                                        <span class="label">Temp:</span>
+                                        <span class="value">95</span>
+                                        <span class="unit">°C</span>
+                                    </div>
+                                    <div class="tire-item pressure">
+                                        <span class="label">Press:</span>
+                                        <span class="value">31.8</span>
+                                        <span class="unit">PSI</span>
+                                    </div>
+                                    <div class="tire-item wear">
+                                        <span class="label">Wear:</span>
+                                        <span class="value">31</span>
+                                        <span class="unit">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tire-corner">
+                                <div class="tire-header">RR</div>
+                                <div class="tire-data">
+                                    <div class="tire-item temp">
+                                        <span class="label">Temp:</span>
+                                        <span class="value">93</span>
+                                        <span class="unit">°C</span>
+                                    </div>
+                                    <div class="tire-item pressure">
+                                        <span class="label">Press:</span>
+                                        <span class="value">32.0</span>
+                                        <span class="unit">PSI</span>
+                                    </div>
+                                    <div class="tire-item wear">
+                                        <span class="label">Wear:</span>
+                                        <span class="value">29</span>
+                                        <span class="unit">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Engine & Mechanical Panel -->
+                <div class="telemetry-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🔧 ENGINE & MECHANICAL</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn">⛽</button>
+                            <button class="control-btn">⚙</button>
+                        </div>
+                    </div>
+                    <div class="engine-data">
+                        <div class="engine-item temp">
+                            <div class="engine-content">
+                                <span class="engine-label">Engine Temp</span>
+                                <span class="separator">:</span>
+                                <span class="engine-value">89</span>
+                                <span class="engine-unit">°C</span>
+                            </div>
+                        </div>
+                        <div class="engine-item pressure">
+                            <div class="engine-content">
+                                <span class="engine-label">Oil Press</span>
+                                <span class="separator">:</span>
+                                <span class="engine-value">94</span>
+                                <span class="engine-unit">PSI</span>
+                            </div>
+                        </div>
+                        <div class="engine-item boost">
+                            <div class="engine-content">
+                                <span class="engine-label">Boost</span>
+                                <span class="separator">:</span>
+                                <span class="engine-value">1.4</span>
+                                <span class="engine-unit">BAR</span>
+                            </div>
+                        </div>
+                        <div class="engine-item mode">
+                            <div class="engine-content">
+                                <span class="engine-label">Eng Mode</span>
+                                <span class="separator">:</span>
+                                <span class="engine-value">MAP2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Analysis Panel -->
+                <div class="telemetry-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🤖 AI ANALYSIS</h3>
+                        <div class="panel-controls">
+                            <button class="control-btn">🧠</button>
+                            <button class="control-btn">⚙</button>
+                        </div>
+                    </div>
+                    <div class="ai-suggestions">
+                        <div class="ai-item priority-high">
+                            <div class="ai-content">
+                                <span class="ai-label">Priority</span>
+                                <span class="separator">:</span>
+                                <span class="ai-value high">HIGH</span>
+                            </div>
+                        </div>
+                        <div class="ai-item pit-window">
+                            <div class="ai-content">
+                                <span class="ai-label">Pit Window</span>
+                                <span class="separator">:</span>
+                                <span class="ai-value">Lap 15-17</span>
+                            </div>
+                        </div>
+                        <div class="ai-item optimal">
+                            <div class="ai-content">
+                                <span class="ai-label">Optimal</span>
+                                <span class="separator">:</span>
+                                <span class="ai-value">Lap 16</span>
+                            </div>
+                        </div>
+                        <div class="ai-item fuel-save">
+                            <div class="ai-content">
+                                <span class="ai-label">Fuel Save</span>
+                                <span class="separator">:</span>
+                                <span class="ai-value">-0.2L/Lap</span>
+                            </div>
+                        </div>
+                        <div class="ai-item stint-extend">
+                            <div class="ai-content">
+                                <span class="ai-label">Extends Stint</span>
+                                <span class="separator">:</span>
+                                <span class="ai-value">+2 Laps</span>
+                            </div>
+                        </div>
+                        <div class="ai-item overtake">
+                            <div class="ai-content">
+                                <span class="ai-label">Overtake</span>
+                                <span class="separator">:</span>
+                                <span class="ai-value">T13 Stowe Corner</span>
+                            </div>
+                        </div>
+                        <div class="ai-item gain">
+                            <div class="ai-content">
+                                <span class="ai-label">Potential Gain</span>
+                                <span class="separator">:</span>
+                                <span class="ai-value gain">+0.3s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Team Messages Panel (Bottom) -->
+        <div class="team-messages-bottom">
+            <div class="messages-panel-header">
+                <h3 class="messages-title">📻 TEAM MESSAGES</h3>
+                <div class="messages-controls">
+                    <span class="messages-count" id="bottom-message-count">3 messages</span>
+                    <button class="control-btn" onclick="clearCommunicationLog()">🗑️</button>
+                    <button class="control-btn" onclick="exportCommunicationLog()">💾</button>
+                    <button class="control-btn" onclick="toggleMessagesExpanded()">↕️</button>
+                </div>
+            </div>
+            <div class="messages-content" id="bottom-messages-container">
+                <div class="message-item">
+                    <div class="message-time">14:23:15</div>
+                    <div class="message-speaker">AI STRATEGIST</div>
+                    <div class="message-content">"Pit window opens in 3 laps. Consider medium compound for next stint."</div>
+                </div>
+                <div class="message-item">
+                    <div class="message-time">14:22:48</div>
+                    <div class="message-speaker">DRIVER</div>
+                    <div class="message-content">"Front left tire degradation increasing. Need strategy update."</div>
+                </div>
+                <div class="message-item">
+                    <div class="message-time">14:22:12</div>
+                    <div class="message-speaker">AI STRATEGIST</div>
+                    <div class="message-content">"Current pace is optimal. Maintain position and tire management."</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Competitor Analysis Modal -->
+    <div class="competitor-modal-overlay" id="competitor-modal-overlay">
+        <div class="competitor-modal">
+            <div class="competitor-modal-header">
+                <div class="competitor-info">
+                    <div class="competitor-avatar" id="competitor-avatar">VER</div>
+                    <div class="competitor-details">
+                        <h2 class="competitor-name" id="competitor-name">Max Verstappen</h2>
+                        <div class="competitor-team" id="competitor-team">Red Bull Racing</div>
+                        <div class="competitor-position">P<span id="competitor-position">1</span> • <span id="competitor-gap">LEADER</span></div>
+                    </div>
+                </div>
+                <div class="competitor-modal-controls">
+                    <button class="modal-tab active" data-tab="performance">📊 Performance</button>
+                    <button class="modal-tab" data-tab="strategy">🏁 Strategy</button>
+                    <button class="modal-tab" data-tab="telemetry">📈 Telemetry</button>
+                    <button class="competitor-modal-close" id="competitor-modal-close">×</button>
+                </div>
+            </div>
+            
+            <div class="competitor-modal-content">
+                <!-- Performance Tab -->
+                <div class="modal-tab-content active" id="tab-performance">
+                    <div class="performance-grid">
+                        <div class="performance-card">
+                            <h4>🏎️ Current Performance</h4>
+                            <div class="performance-stats">
+                                <div class="stat">
+                                    <span class="stat-label">Current Lap</span>
+                                    <span class="stat-value" id="perf-current-lap">1:21.456</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Best Lap</span>
+                                    <span class="stat-value" id="perf-best-lap">1:20.234</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Avg Speed</span>
+                                    <span class="stat-value" id="perf-avg-speed">287 KMH</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Sector 1</span>
+                                    <span class="stat-value" id="perf-s1">31.234</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Sector 2</span>
+                                    <span class="stat-value" id="perf-s2">28.891</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-label">Sector 3</span>
+                                    <span class="stat-value" id="perf-s3">21.765</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="performance-card">
+                            <h4>🔧 Technical Status</h4>
+                            <div class="technical-status">
+                                <div class="status-item">
+                                    <span class="status-icon green">●</span>
+                                    <span>Engine: Optimal</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-icon yellow">●</span>
+                                    <span>Tires: 78% Remaining</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-icon green">●</span>
+                                    <span>Fuel: 23.4L (8 laps)</span>
+                                </div>
+                                <div class="status-item">
+                                    <span class="status-icon green">●</span>
+                                    <span>DRS: Available</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Strategy Tab -->
+                <div class="modal-tab-content" id="tab-strategy">
+                    <div class="strategy-grid">
+                        <div class="strategy-card">
+                            <h4>🏁 Race Strategy</h4>
+                            <div class="strategy-timeline">
+                                <div class="strategy-stint">
+                                    <div class="stint-info">
+                                        <span class="stint-tire hard">HARD</span>
+                                        <span class="stint-laps">Laps 1-18</span>
+                                    </div>
+                                    <div class="stint-status completed">Completed</div>
+                                </div>
+                                <div class="strategy-stint">
+                                    <div class="stint-info">
+                                        <span class="stint-tire medium">MEDIUM</span>
+                                        <span class="stint-laps">Laps 19-35</span>
+                                    </div>
+                                    <div class="stint-status current">Current</div>
+                                </div>
+                                <div class="strategy-stint">
+                                    <div class="stint-info">
+                                        <span class="stint-tire soft">SOFT</span>
+                                        <span class="stint-laps">Laps 36-50</span>
+                                    </div>
+                                    <div class="stint-status planned">Planned</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="strategy-card">
+                            <h4>⚡ Strategic Threats</h4>
+                            <div class="threat-analysis">
+                                <div class="threat-item high">
+                                    <span class="threat-level">HIGH</span>
+                                    <span class="threat-desc">Undercut window opens lap 22</span>
+                                </div>
+                                <div class="threat-item medium">
+                                    <span class="threat-level">MED</span>
+                                    <span class="threat-desc">DRS train forming behind</span>
+                                </div>
+                                <div class="threat-item low">
+                                    <span class="threat-level">LOW</span>
+                                    <span class="threat-desc">Tire degradation within normal</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Telemetry Tab -->
+                <div class="modal-tab-content" id="tab-telemetry">
+                    <div class="telemetry-grid">
+                        <div class="telemetry-card">
+                            <h4>🌡️ Tire Temperatures</h4>
+                            <div class="tire-temps">
+                                <div class="tire-temp fl">
+                                    <span class="tire-label">FL</span>
+                                    <span class="tire-value">89°C</span>
+                                </div>
+                                <div class="tire-temp fr">
+                                    <span class="tire-label">FR</span>
+                                    <span class="tire-value">91°C</span>
+                                </div>
+                                <div class="tire-temp rl">
+                                    <span class="tire-label">RL</span>
+                                    <span class="tire-value">95°C</span>
+                                </div>
+                                <div class="tire-temp rr">
+                                    <span class="tire-label">RR</span>
+                                    <span class="tire-value">93°C</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="telemetry-card">
+                            <h4>⚙️ Engine Data</h4>
+                            <div class="engine-data">
+                                <div class="engine-stat">
+                                    <span class="engine-label">Temperature</span>
+                                    <span class="engine-value">89°C</span>
+                                </div>
+                                <div class="engine-stat">
+                                    <span class="engine-label">Oil Pressure</span>
+                                    <span class="engine-value">94 PSI</span>
+                                </div>
+                                <div class="engine-stat">
+                                    <span class="engine-label">RPM</span>
+                                    <span class="engine-value">11,847</span>
+                                </div>
+                                <div class="engine-stat">
+                                    <span class="engine-label">Boost</span>
+                                    <span class="engine-value">1.4 BAR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Scripts -->
+    <script src="js/websocket-client.js"></script>
+    <script src="js/telemetry-processor.js"></script>
+    <script src="js/track-map.js"></script>
+    <script src="js/ui-controller.js"></script>
+    <script src="js/voice-comm.js"></script>
+    <script src="js/racing-series-detector.js"></script>
+    <script src="js/driver-data-generator.js"></script>
+    <script src="js/competitor-analysis.js"></script>
+</body>
+</html>

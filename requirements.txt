@@ -1,0 +1,14 @@
+# Core dependencies for Blackbox Driver Side
+websockets
+requests>=2.31.0
+websocket-client>=1.6.0
+sounddevice>=0.4.6
+numpy>=1.24.0
+openai-whisper
+PyInstaller
+platformdirs>=3.10.0
+scipy>=1.10.0
+pydub>=0.25.1
+# For Tauri/Electron UI bridge (placeholder)
+# For Windows: irsdk (iRacing SDK Python bindings, Windows only)
+# For Mac: stub/mock only

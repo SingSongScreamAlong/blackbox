@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "name": "PROJECT:BLACKBOX Universal Racing HUD",
+    "version": "1.0.0",
+    "description": "Professional racing telemetry and strategy interface with universal series support",
+    "build_date": "2025-01-24",
+    "environment": "production"
+  },
+  "api_keys": {
+    "deepgram": {
+      "api_key": "YOUR_DEEPGRAM_API_KEY_HERE",
+      "model": "nova-2",
+      "language": "en-US",
+      "encoding": "linear16",
+      "sample_rate": 16000
+    },
+    "elevenlabs": {
+      "api_key": "YOUR_ELEVENLABS_API_KEY_HERE",
+      "voice_id": "YOUR_PREFERRED_VOICE_ID",
+      "model_id": "eleven_monolingual_v1",
+      "stability": 0.5,
+      "similarity_boost": 0.5
+    }
+  },
+  "network": {
+    "backend_url": "wss://your-backend-domain.com/ws",
+    "http_fallback": "https://your-backend-domain.com/api",
+    "connection_timeout": 5000,
+    "reconnect_attempts": 3,
+    "heartbeat_interval": 30000
+  },
+  "telemetry": {
+    "update_rate": 60,
+    "data_buffer_size": 1000,
+    "enable_logging": true,
+    "log_level": "INFO"
+  },
+  "voice": {
+    "push_to_talk_key": "Space",
+    "voice_activation_threshold": 0.3,
+    "silence_timeout": 2000,
+    "max_recording_duration": 30000
+  },
+  "ui": {
+    "theme": "f1_pit_wall",
+    "auto_detect_series": true,
+    "default_series": "endurance",
+    "refresh_rate": 60,
+    "enable_animations": true
+  },
+  "audio": {
+    "input_device": "default",
+    "output_device": "default",
+    "input_volume": 0.8,
+    "output_volume": 0.8
+  },
+  "security": {
+    "enable_ssl": true,
+    "validate_certificates": true,
+    "api_rate_limit": 100
+  },
+  "updates": {
+    "auto_update": true,
+    "check_interval_hours": 6,
+    "github_repo": "your-username/blackbox-driver",
+    "github_token": "",
+    "backup_before_update": true,
+    "notify_on_update": true
+  },
+  "digital_ocean": {
+    "update_endpoint": "https://your-app.digitalocean.app",
+    "api_key": "",
+    "enable_remote_config": true,
+    "sync_interval_minutes": 30
+  },
+  "features": {
+    "competitor_analysis": true,
+    "voice_communication": true,
+    "track_visualization": true,
+    "strategy_recommendations": true,
+    "mobile_support": true
+  }
+}

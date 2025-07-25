@@ -1,0 +1,28 @@
+{
+  "network": {
+    "server_url": "ws://137.184.151.3:8766",
+    "api_key": "YOUR_BACKEND_API_KEY"
+  },
+  "api_keys": {
+    "elevenlabs": "sk_434dcdde15bb4d8a374a7812b1a6f583d062ce7f732eb2ed",
+    "deepgram": "f52fda2e35044ea6b9f044ababaa050987044ba7"
+  },
+  "voice": {
+    "stt": "deepgram",
+    "tts": "elevenlabs",
+    "input_device": "default",
+    "output_device": "default",
+    "volume": 1.0
+  },
+  "ui": {
+    "overlay_enabled": true,
+    "toggle_key": "F1"
+  },
+  "keybindings": {
+    "toggle_overlay": "F1",
+    "push_to_talk": "V",
+    "next_audio_device": "F2",
+    "prev_audio_device": "F3"
+  },
+  "profile": "default"
+}
