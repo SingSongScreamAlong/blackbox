@@ -5,7 +5,7 @@ services:
   github:
     repo: SingSongScreamAlong/blackbox
     branch: master
-  build_command: echo "No build needed"
+  build_command: :
   run_command: python minimal_app.py
   environment_slug: python
   instance_count: 1
