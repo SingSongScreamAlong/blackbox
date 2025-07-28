@@ -1,0 +1,15 @@
+name: project-blackbox
+services:
+- name: web
+  source_dir: /
+  github:
+    repo: SingSongScreamAlong/blackbox
+    branch: master
+  run_command: python minimal_app.py
+  environment_slug: python
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  http_port: 8080
+  envs:
+  - key: PORT
+    value: "8080"
