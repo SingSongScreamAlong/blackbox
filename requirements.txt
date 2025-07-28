@@ -1,5 +1,6 @@
 # Essential dependencies for App Platform deployment
-websockets>=10.4
+Flask>=2.3.0
+Flask-SocketIO>=5.3.0
 requests>=2.31.0
 # For Tauri/Electron UI bridge (placeholder)
 # For Windows: irsdk (iRacing SDK Python bindings, Windows only)

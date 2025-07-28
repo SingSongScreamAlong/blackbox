@@ -110,9 +110,9 @@ import threading
 from urllib.parse import urlparse
 
 def serve_static_files():
-    """Serve static files from team directory"""
+    """Serve static files from static/team directory"""
     import os
-    os.chdir('team')
+    os.chdir('static/team')
     handler = http.server.SimpleHTTPRequestHandler
     httpd = socketserver.TCPServer(("", 8081), handler)
     logger.info("Static file server started on port 8081")
