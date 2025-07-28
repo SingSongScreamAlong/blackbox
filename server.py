@@ -8,14 +8,18 @@ import websockets
 import json
 import logging
 import os
+import sys
 from datetime import datetime
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
 # Store active connections
 clients = set()
+
+print("Starting Project Blackbox server...")
+logger.info("Server initialization starting")
 
 async def handle_client(websocket, path):
     """Handle WebSocket client connections"""
