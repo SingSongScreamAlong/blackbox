@@ -1,0 +1,40 @@
+name: project-blackbox
+services:
+- name: backend
+  source_dir: /
+  github:
+    repo: SingSongScreamAlong/blackbox
+    branch: master
+  run_command: python main.py
+  environment_slug: python
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  http_port: 8080
+  envs:
+  - key: ENVIRONMENT
+    value: production
+  - key: PORT
+    value: "8080"
+- name: team-hud
+  source_dir: /team
+  github:
+    repo: SingSongScreamAlong/blackbox
+    branch: master
+  environment_slug: node-js
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  http_port: 3000
+  build_command: npm install -g http-server
+  run_command: http-server -p 3000 .
+  routes:
+  - path: /team
+static_sites:
+- name: team-engineer-hud
+  source_dir: /team
+  github:
+    repo: SingSongScreamAlong/blackbox
+    branch: master
+  build_command: echo "Static site ready"
+  output_dir: /
+  routes:
+  - path: /
