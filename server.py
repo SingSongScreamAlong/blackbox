@@ -104,12 +104,30 @@ async def health_check():
         if disconnected:
             logger.info(f"Cleaned up {len(disconnected)} disconnected clients")
 
+import http.server
+import socketserver
+import threading
+from urllib.parse import urlparse
+
+def serve_static_files():
+    """Serve static files from team directory"""
+    import os
+    os.chdir('team')
+    handler = http.server.SimpleHTTPRequestHandler
+    httpd = socketserver.TCPServer(("", 8081), handler)
+    logger.info("Static file server started on port 8081")
+    httpd.serve_forever()
+
 def main():
     """Main server entry point"""
     port = int(os.environ.get('PORT', 8080))
     host = '0.0.0.0'
     
     logger.info(f"Starting Project Blackbox WebSocket server on {host}:{port}")
+    
+    # Start static file server in background thread
+    static_thread = threading.Thread(target=serve_static_files, daemon=True)
+    static_thread.start()
     
     # Start health check task
     asyncio.get_event_loop().create_task(health_check())
